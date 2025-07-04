@@ -1,4 +1,6 @@
-interface PostProps {
+import Link from "next/link";
+
+export interface PostProps {
     id: number;
     title: string;
     body: string;
@@ -16,27 +18,44 @@ export default async function Posts() {
     const response = await fetch(`${baseUrl}/posts`)
     const data: ResponseProps = await response.json()
 
-    async function handleFetchPosts() {
+    async function handleFetchPostById(formData: FormData) {
         'use server';
-        const response = await fetch(`${baseUrl}/posts`)
-        const data: ResponseProps = await response.json()
 
-        console.log(data)
+        const userId = formData.get('userId')
+        const response = await fetch(`${baseUrl}/posts/user/${userId}`, {})
+        const data: ResponseProps = await response.json()
     }
 
     return (
         <div>
             <h1 className={"text-center mt-5 mb-2 font-bold text-3xl"}>Todos os posts</h1>
 
-            <button onClick={handleFetchPosts} className={"bg-blue-500 text-white px-4 py-2 rounded-md"}>
-                Buscar posts
-            </button>
+            <form
+                className={"flex gap-2 my-4"}
+                action={handleFetchPostById}
+            >
+                <input
+                    type={"text"}
+                    placeholder={"ID do usuário"}
+                    className={"border border-gray-200 p-2 rounded-md"}
+                    name={"userId"}
+                />
+                <button
+                    type={"submit"}
+                    className={"bg-blue-500 text-white p-2 rounded-md"}
+                >
+                    Buscar
+                </button>
+            </form>
 
             <div className={"flex flex-col gap-4"}>
                 {data.posts.map(post => (
                     <div key={post.id} className={"bg-gray-100 p-4 mx-2 rounded-md"}>
                         <h2 className={"font-bold"}>{post.title}</h2>
                         <p>{post.body}</p>
+                        <Link href={`/posts/${post.id}`}>
+                            Acessar detalhes
+                        </Link>
                     </div>
                 ))}
             </div>
