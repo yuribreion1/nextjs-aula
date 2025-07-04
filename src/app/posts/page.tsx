@@ -23,7 +23,6 @@ export default async function Posts() {
 
         const userId = formData.get('userId')
         const response = await fetch(`${baseUrl}/posts/user/${userId}`, {})
-        const data: ResponseProps = await response.json()
     }
 
     return (
