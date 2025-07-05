@@ -2,11 +2,13 @@ import Link from "next/link";
 
 export function Header() {
     return(
-        <header className={"flex px-2 py-4 bg-zinc-900 text-white"}>
-            <div className={"flex items-center justify-between w-full mx-auto max-w-7x1"}>
-                <div>NextJS</div>
-                <nav>
-                    <ul className={"flex items-center justify-center gap-2"}>
+        <header>
+            <nav className={"uk-navbar-container"}>
+                <div className={"uk-navbar-left ml-5 mb-5"}>
+                    <a  className={"uk-navbar-item uk-logo"}>
+                        <h3>Aula Next.JS</h3>
+                    </a>
+                    <ul className={"uk-navbar-nav"}>
                         <li>
                             <Link href={'/'}>
                                 Home
@@ -22,9 +24,14 @@ export function Header() {
                                 Dashboard
                             </Link>
                         </li>
+                        <li>
+                            <Link href={'/products'}>
+                                Products
+                            </Link>
+                        </li>
                     </ul>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </header>
     )
 }
